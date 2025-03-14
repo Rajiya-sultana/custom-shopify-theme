@@ -1,0 +1,82 @@
+{% schema %}
+{
+  "name": "BG image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Background Image",
+      "id": "bg-image"
+    },
+    {
+      "type": "text",
+      "label": "Title",
+      "id": "title",
+      "default": "Title"
+    },
+    {
+      "type": "richtext",
+      "label": "Content",
+      "id": "content"
+    },
+    {
+      "type": "url",
+      "label": "URL",
+      "id": "url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BG image"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="bg-image">
+  <div class="container">
+    <div class="section">
+      <h1 class="bg-color">
+        {{- section.settings.title -}}
+      </h1>
+      <p class="bg-color">{{- section.settings.content -}}</p>
+      <!-- <a href="{{- section.settings.url -}}">SHOP NOW</a> -->
+    </div>
+  </div>
+</div>
+
+<style>
+  .bg-image {
+    background-image: url('{{ section.settings.bg-image | img_url:'master' }}');
+    background-size: cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-position: bottom;
+    background-attachment: fixed;
+  }
+  .bg-image .section {
+    max-width: 1000px;
+    width: 100%;
+  }
+  body .bg-image h1{
+     color: #fff;
+    font-size:6rem;
+    font-weight:600;
+  }
+  body .bg-image p {
+    color: #fff;
+
+  }
+  .bg-image a {
+    display: block;
+    background: #cc4d0f;
+    color: #fff;
+    width: fit-content;
+    margin-top: 2em;
+    padding: 10px 2em;
+    font-weight: 600;
+    margin-inline: auto;
+  }
+</style>

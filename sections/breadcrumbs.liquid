@@ -1,0 +1,20 @@
+{% comment %} <div class="container">
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    /
+    {% unless collection.title %}
+      all-products
+    {% endunless %}
+    <a href="{{ collection.url }}">{{ collection.title }}</a>
+    {% if template.name == 'product' %}
+      /
+      <span class="lightcolor gray">{{ product.title }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Pass the Liquid variable to JavaScript
+  const templateName = "{{ template.name }}";
+  console.log(templateName);
+</script> {% endcomment %}

@@ -1,0 +1,207 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "bg_image_QaVXqt": {
+      "type": "bg-image",
+      "settings": {
+        "bg-image": "shopify://shop_images/hero-image1.jpg",
+        "title": "Shop",
+        "content": "",
+        "url": ""
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "collection": "all-products",
+        "products_per_page": 16,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "testimonial_FN7Jig": {
+      "type": "testimonial",
+      "blocks": {
+        "column_q3qzNp": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Daco_1918102.png",
+            "toggle_image": true,
+            "title": "Full Name",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "stars_count": "5",
+            "toggle_review_stars": true
+          }
+        },
+        "column_zVf3XF": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Daco_1918102.png",
+            "toggle_image": true,
+            "title": "Full Name",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "stars_count": "5",
+            "toggle_review_stars": true
+          }
+        },
+        "column_YMrDUh": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Daco_1918102.png",
+            "toggle_image": true,
+            "title": "Full Name",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "stars_count": "5",
+            "toggle_review_stars": true
+          }
+        },
+        "column_Vj4g7Y": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Daco_1918102.png",
+            "toggle_image": true,
+            "title": "Full Name",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "stars_count": "5",
+            "toggle_review_stars": true
+          }
+        },
+        "column_URETY4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Daco_1918102.png",
+            "toggle_image": true,
+            "title": "Full Name",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "stars_count": "5",
+            "toggle_review_stars": true
+          }
+        }
+      },
+      "block_order": [
+        "column_q3qzNp",
+        "column_zVf3XF",
+        "column_YMrDUh",
+        "column_Vj4g7Y",
+        "column_URETY4"
+      ],
+      "settings": {
+        "title": "Testimonials",
+        "autoplay_speed": 2000,
+        "heading_size": "h0",
+        "subtitle": "Get inspired by other customers",
+        "heading_alignment": "center",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "column_alignment": "center",
+        "background_style": "primary",
+        "enable_slider": true,
+        "enable_desktop_slider": true,
+        "star_color": "#ffcc33",
+        "testimonial_background": "#ffffff",
+        "testimonial_section_background": "#eaeaea",
+        "reviews": 4.7,
+        "text": "Star rating"
+      }
+    },
+    "instagram_reviews_XfNLjn": {
+      "type": "Instagram-reviews",
+      "blocks": {
+        "logo_image_y8LzkM": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item1.jpg",
+            "link": ""
+          }
+        },
+        "logo_image_p4t8jT": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item2.jpg",
+            "link": ""
+          }
+        },
+        "logo_image_jEbLy4": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item3.jpg",
+            "link": ""
+          }
+        },
+        "logo_image_aWaF96": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item4.jpg",
+            "link": ""
+          }
+        },
+        "logo_image_VEkb3t": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item5.jpg",
+            "link": ""
+          }
+        },
+        "logo_image_Kjp8qd": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/insta-item5.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_image_y8LzkM",
+        "logo_image_p4t8jT",
+        "logo_image_jEbLy4",
+        "logo_image_aWaF96",
+        "logo_image_VEkb3t",
+        "logo_image_Kjp8qd"
+      ],
+      "settings": {
+        "title": "Shop Our Insta",
+        "heading_size": "h0",
+        "logo_width": "160px",
+        "text_alignment": "center",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "bg_image_QaVXqt",
+    "banner",
+    "product-grid",
+    "testimonial_FN7Jig",
+    "instagram_reviews_XfNLjn"
+  ]
+}

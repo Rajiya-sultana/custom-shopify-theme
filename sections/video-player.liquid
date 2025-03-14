@@ -1,0 +1,98 @@
+
+<style>
+.video-image{
+  max-width:1400px;
+  width:100%;
+  height:auto;
+}  
+  .video-content{
+    position:relative;
+  }
+ .video .video-player {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+}
+  .video .video-player a {
+    position: relative;
+}
+  .video .video-player .placIcon {
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+  .text-rotate{
+        animation: rotation 50s infinite linear;
+  }
+
+  @keyframes rotation{
+    from{
+      transform : rotate(0deg);
+    }
+    to{
+      transform: rotate(360deg)
+    }
+  }
+</style>
+
+<section class="video py-5 overflow-hidden">
+    <div class="video-content open-up aos-init aos-animate" data-aos="zoom-out">
+      <div class="video-bg">
+        <img src="{{ section.settings.videoImage | image_url: width: "1000" }}" alt="video" class="video-image ">
+      </div>
+      <div class="video-player">
+            <a href="{{ section.settings.videoLink }}">
+              
+              <img src="{{ section.settings.playbtn | image_url: width: "100" }}" alt="pattern" class="placIcon" >
+              <img src="{{ section.settings.pattern | image_url: width: "300"  }}" class="text-rotate">
+            </a>
+          </div>
+    </div>
+  </section>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Video player",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "videoImage",
+        "label": "Bg Image"
+      },
+      {
+        "type": "url",
+        "id": "videoLink",
+        "label": "Video Link"
+      },
+        {
+        "type": "image_picker",
+        "id": "playbtn",
+        "label": "Play button"
+      },
+       {
+        "type": "image_picker",
+        "id": "pattern",
+        "label": "text Pattern"
+      },
+    ],
+    "presets": [
+      {
+        "name": "video-player"
+      }
+    ]
+  }
+{% endschema %}

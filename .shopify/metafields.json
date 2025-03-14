@@ -1,0 +1,76 @@
+{
+  "article": [],
+  "blog": [],
+  "brand": [],
+  "collection": [],
+  "company": [],
+  "company_location": [],
+  "location": [],
+  "market": [],
+  "order": [],
+  "page": [],
+  "product": [
+    {
+      "key": "product_images",
+      "namespace": "custom",
+      "name": "Product Images",
+      "description": "",
+      "type": {
+        "name": "file_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "bedding-size",
+      "namespace": "shopify",
+      "name": "Bedding size",
+      "description": "Defines the size category for bedding items, e.g. standard, king",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    },
+    {
+      "key": "specification",
+      "namespace": "addition",
+      "name": "specification",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "care",
+      "namespace": "addition",
+      "name": "care",
+      "description": "",
+      "type": {
+        "name": "multi_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "sale_end_date",
+      "namespace": "custom",
+      "name": "Sale End Date",
+      "description": "",
+      "type": {
+        "name": "date_time",
+        "category": "DATE_TIME"
+      }
+    },
+    {
+      "key": "average_rating",
+      "namespace": "custom",
+      "name": "Average Rating",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    }
+  ],
+  "variant": [],
+  "shop": []
+}

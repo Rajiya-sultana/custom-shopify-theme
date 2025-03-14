@@ -1,0 +1,124 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "new_footer_Dxi7zW": {
+      "type": "new-footer",
+      "blocks": {
+        "text_PnMbYE": {
+          "type": "text",
+          "settings": {
+            "heading": "KAIRA",
+            "subtext": "<p>Gravida massa volutpat aenean odio. Amet, turpis erat nullam fringilla elementum diam in. Nisi, purus vitae, ultrices nunc. Sit ac sit suscipit hendrerit.</p>"
+          }
+        },
+        "link_list_bbVWpi": {
+          "type": "link_list",
+          "settings": {
+            "heading": "QUICK LINKS",
+            "menu": "footer"
+          }
+        },
+        "link_list_Y4gqWd": {
+          "type": "link_list",
+          "settings": {
+            "heading": "HELP & INFO",
+            "menu": "footer"
+          }
+        },
+        "brand_information_mRmdfi": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": false
+          }
+        }
+      },
+      "block_order": [
+        "text_PnMbYE",
+        "link_list_bbVWpi",
+        "link_list_Y4gqWd",
+        "brand_information_mRmdfi"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": false,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_f7yLbe": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
+          }
+        },
+        "link_list_Mchdz9": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Help & Info",
+            "menu": "footer"
+          }
+        },
+        "link_list_4pCjCc": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
+          }
+        },
+        "brand_information_9Kckk3": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        }
+      },
+      "block_order": [
+        "link_list_f7yLbe",
+        "link_list_Mchdz9",
+        "link_list_4pCjCc",
+        "brand_information_9Kckk3"
+      ],
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "new_footer_Dxi7zW",
+    "footer"
+  ]
+}

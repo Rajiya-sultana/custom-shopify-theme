@@ -1,0 +1,222 @@
+<style>
+    .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top }}px;
+            padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+    }
+
+    .mt {
+        margin-top: 2rem;
+    }
+
+    .tabs {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        width: 100%;
+        position: relative; /* Added for better positioning control */
+    }
+
+    .tabs li {
+        margin: 0;
+    }
+
+    .tabs a {
+        display: block;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #333;
+        border-radius: 5px 5px 0 0;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        white-space: nowrap;
+        position: relative; /* For z-index control */
+        z-index: 1; /* Ensure tabs are above border */
+    }
+
+    .tabs a.active {
+        border: 1px solid #ddd;
+        border-bottom: 1px solid #fff; /* White bottom border to overlap the line */
+        background: #fff; /* Add background for better visibility */
+        position: relative;
+        top: 1px; 
+    }
+
+    .tabs-content {
+        padding: 10px;
+        background: #fff; 
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.active {
+        display: block;
+    }
+
+  
+    @media screen and (max-width: 749px) {
+        .tabs {
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 5px;
+            gap: 3px; 
+        }
+
+        .tabs a {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .tabs a.active {
+            border-bottom: 1px solid #fff; /* Ensure white bottom border */
+            top: 0; /* Adjust position for wrapped tabs */
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add subtle shadow for depth */
+        }
+
+        .tabs-content {
+            padding: 8px;
+        }
+    }
+
+    /* Tablet adjustments */
+    @media screen and (min-width: 750px) and (max-width: 990px) {
+        .tabs a {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    }
+
+    /* Desktop */
+    @media screen and (min-width: 991px) {
+        .mt {
+            margin-top: 4rem;
+        }
+
+        .tabs a {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+
+        .tabs-content {
+            padding: 15px;
+        }
+    }
+</style>
+
+
+{% schema %}
+{
+    "name": "Multitab",
+    "max_blocks": 5,
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding_top",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_top",
+            "default": 36
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "min": 0,
+            "max": 100,
+            "step": 4,
+            "unit": "px",
+            "label": "t:sections.all.padding.padding_bottom",
+            "default": 36
+        }
+    ],
+    "blocks": [
+        {
+            "type": "tab",
+            "name": "tab",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "tab_title",
+                    "label": "Tab Title",
+                    "default": "Tab"
+                },
+                {
+                    "type": "text",
+                    "id": "tab_heading",
+                    "label": "Tab Heading",
+                    "default": "Tab heading"
+                },
+                {
+                    "type": "textarea",
+                    "id": "tab_content",
+                    "label": "Tab Content",
+                    "default": "This is a content for the tab"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Multi Tab",
+            "blocks": [
+                {"type": "tab"},
+                {"type": "tab"},
+                {"type": "tab"}
+            ]
+        }
+    ]
+}
+{% endschema %}
+
+<div class="page-width mt section-{{ section.id }}-padding">
+    <ul class="tabs">
+        {% for block in section.blocks %}
+            <li>
+                <a
+                    href="#tab{{ block.id }}"
+                    class="tab-link {% if forloop.first %}active{% endif %}"
+                    onclick="switchTab(event, 'tab{{ block.id }}')"
+                >
+                    {{ block.settings.tab_title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tabs-content">
+        {% for block in section.blocks %}
+            <div id="tab{{ block.id }}" class="tab-pane {% if forloop.first %}active{% endif %}">
+                <h2>{{ block.settings.tab_heading }}</h2>
+                <p>{{ block.settings.tab_content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function switchTab(event, tabId) {
+        event.preventDefault();
+        
+        document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>

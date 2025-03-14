@@ -1,0 +1,241 @@
+<style>
+  .product-carousel-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .carousel {
+    overflow: hidden;
+  }
+
+  .product-image-slider {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image-slider .carousel-cell {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-image-slider img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .product-thumbnail-slider {
+    margin-top: 10px;
+    width: 100%;            
+  max-width: 800px;        
+  margin-left: auto;        
+  margin-right: auto;
+  }
+  .product-thumbnail-slider .flickity-slider{
+    display: flex;
+  justify-content: center;
+  width: 100%;
+  }
+
+  .product-thumbnail-slider .carousel-cell {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: none; /* Explicitly no shadow */
+  }
+
+  .product-thumbnail-slider .carousel-cell:hover {
+    transform: scale(1.1); /* This might be causing the shadow-like effect */
+  }
+
+  .product-thumbnail-slider img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    box-shadow: none; /* Explicitly no shadow */
+  }
+
+  .product-thumbnail-slider .carousel-cell.is-selected img {
+    border: 2px solid #000;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .product-image-slider .carousel-cell {
+      height: 400px;
+    }
+    .product-thumbnail-slider .carousel-cell {
+      width: 80px;
+      height: 80px;
+    }
+    .product-thumbnail-slider {
+    max-width: 100%; 
+  }
+  }
+
+  @media (max-width: 480px) {
+    .product-image-slider .carousel-cell {
+      height: 300px;
+    }
+    .product-thumbnail-slider .carousel-cell {
+      width: 60px;
+      height: 60px;
+    }
+    .product-carousel-container {
+      padding: 0 10px;
+    }
+  }
+  /* .product-thumbnail-slider {
+  border: 1px solid red;
+} */
+/* .product-thumbnail-slider .carousel-cell {
+  border: 1px solid blue;
+} */
+  .zoom-container{
+    position:relative;
+    width:100%;
+    height:100%;
+  }
+  .product-main-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    cursor:zoom-in ;
+  }
+</style>
+
+<div class="product-carousel-container">
+  <div class="carousel product-image-slider">
+    {% for media in product.media %}
+      {% case media.media_type %}
+        {% when 'image' %}
+          <div class="carousel-cell">
+          <div class="zoom-container" >
+              <img
+              src="{{ media | image_url: width: 600 }}"
+              data-zoom-image="{{ media | image_url: width: 1200 }}"
+              data-media-id="{{ media.id }}"
+              alt="{{ media.alt }}"
+              class="product-main-image">
+          </div>
+          </div>
+        {% when "external_video" %}
+          <div class="carousel-cell">
+            {{ media | external_video_tag }}
+          </div>
+        {% when 'video' %}
+          <div class="carousel-cell">
+            {{ media | video_tag }}
+          </div>
+        {% when "model" %}
+          <div class="carousel-cell">
+            {{ media | model_viewer_tag }}
+          </div>
+        {% else %}
+          <div class="carousel-cell">
+            {{ media | media_tag }}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+  <div class="carousel product-thumbnail-slider">
+    {% for media in product.media %}
+      {% case media.media_type %}
+        {% when 'image' %}
+          <div class="carousel-cell">
+            <img
+              src="{{ media | image_url: width: 150 }}"
+              data-media-id="{{ media.id }}"
+              alt="{{ media.alt }}"
+              class="product-thumbnail">
+          </div>
+        {% when "external_video" %}
+          <div class="carousel-cell">
+            {{ media | external_video_tag }}
+          </div>
+        {% when 'video' %}
+          <div class="carousel-cell">
+            {{ media | video_tag }}
+          </div>
+        {% when "model" %}
+          <div class="carousel-cell">
+            {{ media | model_viewer_tag }}
+          </div>
+        {% else %}
+          <div class="carousel-cell">
+            {{ media | media_tag }}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Ensure jQuery is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to initialize zoom
+    function initZoom() {
+      $('.zoom-container').each(function() {
+        $(this).zoom({
+          url: $(this).find('img').data('zoom-image'), // Use high-res image
+          magnify: 2, // Zoom level (adjust as needed)
+          on: 'click' // Trigger on hover (or 'click' for tap on mobile)
+        });
+      });
+    }
+
+    // Initialize Flickity main slider
+    let mainCarousel = document.querySelector(".product-image-slider");
+    let flktyMain = new Flickity(mainCarousel, {
+      imagesLoaded: true,
+      lazyLoad: 2,
+      draggable: true,
+      wrapAround: true,
+      pageDots: false,
+      prevNextButtons: true,
+      cellAlign: "center",
+      contain: true
+    });
+
+    // Initialize thumbnail slider
+    let thumbnailCarousel = document.querySelector(".product-thumbnail-slider");
+    let flktyThumbnails = new Flickity(thumbnailCarousel, {
+      asNavFor: ".product-image-slider",
+      contain: true,
+      pageDots: false,
+      prevNextButtons: false,
+      cellAlign: "center",
+      groupCells: false,
+      freeScroll: false
+    });
+
+    // Sync sliders
+    flktyMain.on('change', function(index) {
+      flktyThumbnails.select(index);
+    });
+
+    // Initialize zoom on load
+    initZoom();
+
+    // Reinitialize zoom when slide changes (Flickity moves elements)
+    flktyMain.on('settle', function() {
+      $('.zoom-container').trigger('zoom.destroy'); // Destroy previous zoom instances
+      initZoom(); // Reapply zoom to visible slide
+    });
+  });
+</script>

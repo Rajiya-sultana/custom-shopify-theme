@@ -1,0 +1,221 @@
+{% schema %}
+  {
+    "name": "Browse Collection",
+    "class": "collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Browse The Range"
+      },
+        {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+      {
+        "type": "text",
+        "id": "paragraph",
+        "label": "Content",
+        "default": "Elegant, Timeless & Functional Products"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding Top",
+        "step": 0.5,
+        "unit": "em",
+        "default": 1,
+        "min": 0,
+        "max": 8
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding Bottom",
+        "step": 0.5,
+        "unit": "em",
+        "default": 1,
+        "min": 0,
+        "max": 8
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Collection",
+        "type": "collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "get-col",
+            "label": "Choose collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "col-img",
+            "label": "Title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Browse collection",
+        "blocks": [
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="container">
+  <div class="browse-collection">
+    <h2 class="{{ section.settings.heading_size }}" >{{ section.settings.title }}</h2>
+    <p class="paragraph" >{{ section.settings.paragraph }}</p>
+    <div class="collection-lists">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.get-col.url }}" class="child-col-{{ forloop.index }}">
+          {% if block.settings.col-img == nil %}
+            {{ 'collection-1' | placeholder_svg_tag }}
+          {% else %}
+            <img
+              src="{{ block.settings.col-img | image_url: width: '800' }}"
+              alt="{{ block.settings.get-col.title }}"
+              class="collection-image">
+            <h3>{{ block.settings.get-col.title }}</h3>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .browse-collection {
+    text-align: center;
+    margin: 2em 0;
+    padding-top: {{ section.settings.padding_top }}em;
+    padding-bottom: {{ section.settings.padding_bottom }}em;
+  }
+  .browse-collection h2 {
+    margin-bottom: 0;
+  }
+  .browse-collection p {
+    margin-top: 0;
+  }
+  .collection-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 1em;
+    padding-top: 1em;
+  }
+  .collection-lists a {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .collection-lists a.child-col-1 {
+    grid-column: 1 / 2; /* First column */
+   grid-row: 1 / 3; /* Spans full height */
+    aspect-ratio: 4 / 3; /* Consistent ratio for the big image */
+  }
+  .collection-lists a.child-col-2,
+  .collection-lists a.child-col-3 {
+    grid-column: 2 / 3; /* Second column */
+    aspect-ratio: 4 / 1.5; /* Half the height of child-col-1 */
+  }
+  .collection-lists a.child-col-2 {
+    grid-row: 1 / 2; /* Top half of second column */
+  }
+  .collection-lists a.child-col-3 {
+    grid-row: 2 / 3; /* Bottom half of second column */
+  }
+  .collection-lists a:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    outline: 2px solid #fff;
+    outline-offset: -14px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .collection-lists h3 {
+    color: #fff;
+    z-index: 1;
+    font-size: clamp(16px, 4vw, 22px);
+    letter-spacing: 0.6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+  .collection-lists .collection-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .collection-lists svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 700px) {
+    .collection-lists {
+      grid-template-columns: 1fr;
+    }
+    .collection-lists a.child-col-1,
+    .collection-lists a.child-col-2,
+    .collection-lists a.child-col-3 {
+      grid-column: 1 / 2; 
+      grid-row: auto; 
+    }
+  }
+</style>
+
+
+
+       
