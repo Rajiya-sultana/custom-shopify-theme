@@ -239,7 +239,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .text-body {
-  font-size: 1.5rem;
+  font-size: 16px;
   letter-spacing: 0.06rem;
   line-height: calc(1 + 0.8 / var(--font-body-scale));
   font-family: var(--font-body-family);
@@ -3603,7 +3603,9 @@ body {
 }
 
 .paragraph{
-  /* color:#737373; */
-  color:purple;
+  color:#737373;
+  
   margin:0;
 }
+
+

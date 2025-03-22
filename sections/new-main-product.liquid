@@ -26,10 +26,10 @@
   {%- endif -%}
 
   {%- style -%}
-                    .section-{{ section.id }}-padding {
-                        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-                        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-                    }
+   .section-{{ section.id }}-padding {
+ padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+ padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+}
 
                     @media screen and (min-width: 750px) {
                         .section-{{ section.id }}-padding {
@@ -52,7 +52,7 @@
                         }
                     }
 
-                    /* Existing override for large screens */
+                    
                     @media screen and (min-width: 768px) {
                         .product--large:not(.product--no-media) .product__media-wrapper {
                             max-width: 50% !important;
@@ -62,33 +62,53 @@
                     .product.grid {
                         gap: 2rem !important;
                     }
-                  .sticky-add-to-cart {
-                  position: fixed; /* Keeps it in place while scrolling */
-                  bottom: 10px; /* Distance from the bottom of the screen */
-                  left: 50%; /* Centers it horizontally */
-                  transform: translateX(-50%); /* Adjusts for perfect centering */
-                  background: #ffffff; /* White background */
-                  padding: 10px; /* Inner spacing */
-                  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-                  z-index: 999; /* Ensures it stays on top of other elements */
-                  display: flex; /* Aligns form elements nicely */
-                  gap: 10px; /* Space between elements */
-                }
 
-                .sticky-add-to-cart button {
-                  background-color: #000000; /* Black button */
-                  color: #ffffff; /* White text */
-                  border: none;
-                  padding: 10px 20px;
-                  cursor: pointer;
-                }
 
-                /* Optional: Hide on small screens or adjust layout */
-                @media (max-width: 768px) {
-                  .sticky-add-to-cart {
-                    width: 90%; /* Full width on mobile */
-                    bottom: 10px;
-                  }
+  
+
+    .star-rating .stars {
+      position: relative;
+      display: inline-block;
+      width: 100px; 
+      height: 20px;
+      background: url('{{ "white-star.png" | asset_url }}') repeat-x; 
+      background-size: 20px 20px;
+    }
+
+    .star-rating .stars::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: url('{{ "favorite.png" | asset_url }}') repeat-x; 
+      background-size: 20px 20px;
+      width: calc(var(--rating) * 20px);
+    }
+
+    .star-rating .rating-text {
+      color: #555;
+    }
+
+    
+    .star-rating {
+      --rating: attr(data-rating); 
+    }
+
+ 
+
+
+.btn{
+  padding: 10px 112px !important ;
+}
+
+                
+@media (max-width: 768px) {
+.sticky-add-to-cart {
+width: 90%; 
+bottom: 10px;
+}
+
                 }
                 div#reviews-24110383366507__main {
                 margin: 0;
@@ -102,36 +122,250 @@
           font-weight: bold;
         }
 
-  
+/* Base styles for sticky-add-to-cart */
+.sticky-add-to-cart {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
 
-    .star-rating .stars {
-      position: relative;
-      display: inline-block;
-      width: 100px; /* Adjust based on star size */
-      height: 20px;
-      background: url('{{ "white-star.png" | asset_url }}') repeat-x; /* Empty star */
-      background-size: 20px 20px; /* Size of one star */
-    }
+/* Hide class for smooth animation */
+.sticky-add-to-cart.hidden {
+  transform: translateY(100%);
+}
 
-    .star-rating .stars::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background: url('{{ "favorite.png" | asset_url }}') repeat-x; /* Full star */
-      background-size: 20px 20px;
-      width: calc(var(--rating) * 20px); /* Dynamic width based on rating */
-    }
+/* Form styles */
+.sticky-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  gap: 15px;
+}
 
-    .star-rating .rating-text {
-      color: #555;
-    }
+/* Content wrapper (image and title) */
+.sticky-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-    
-    .star-rating {
-      --rating: attr(data-rating); /* CSS variable from data-rating */
-    }
+/* Actions wrapper (quantity, price, button) */
+.sticky-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Product image */
+.sticky-product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+/* Product title */
+.sticky-title {
+  margin: 0;
+  font-size: 3.25rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+/* Quantity input */
+.quantity {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quantity__button {
+  background: #f5f5f5;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.quantity__button:hover {
+  background: #e0e0e0;
+}
+
+.quantity__input {
+  width: 50px;
+  text-align: center;
+  border: none;
+  padding: 8px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+/* Price styling */
+.price-per-item--current {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.variant-item__old-price {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Add to Cart button */
+.btn {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 12px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sticky-add-to-cart {
+    background: none; /* Remove background */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove padding */
+    border-radius: 0; /* Remove rounding */
+    display: block; /* Change to block for centering */
+  }
+
+  .sticky-form {
+    display: block; /* Stack elements vertically */
+    width: auto; /* Reset width */
+    text-align: center; /* Center the button */
+  }
+
+  .sticky-content {
+    display: none; /* Hide image and title */
+  }
+
+  .sticky-actions {
+    display: block; /* Stack actions */
+  }
+
+  .quantity {
+    display: none; /* Hide quantity input */
+  }
+
+  .price-per-item {
+    display: none; /* Hide price */
+  }
+
+  .btn {
+    /* Keep original size, no shrinking */
+    margin: 0 auto; /* Center horizontally */
+    display: inline-block; /* Inline-block for centering */
+  }
+}
+
+/* Quantity input (unchanged, but height reference established) */
+.quantity {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 40px; /* Explicit height for consistency */
+}
+
+/* Add to Cart button (updated height) */
+.btn {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 12px 40px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  height: 40px; /* Match quantity height */
+  line-height: 1; /* Ensure text aligns vertically */
+  display: flex; /* Flex for vertical centering */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+}
+
+/* Responsive adjustments (updated for mobile) */
+@media (max-width: 768px) {
+  .sticky-add-to-cart {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
+    display: block;
+  }
+
+  .sticky-form {
+    display: block;
+    width: auto;
+    text-align: center;
+  }
+
+  .sticky-content {
+    display: none;
+  }
+
+  .sticky-actions {
+    display: block;
+  }
+
+  .quantity {
+    display: none;
+  }
+
+  .price-per-item {
+    display: none;
+  }
+
+  .btn {
+    width: 100%; /* Full width on mobile */
+    margin: 0; /* Remove auto margin for full width */
+    padding: 12px 0; /* Adjust padding for full width, keep vertical padding */
+    height: 40px; /* Maintain height equal to quantity */
+    border-radius: 0; /* Optional: remove rounding for full-width look */
+  }
+}
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -718,7 +952,7 @@
                       <div class="complementary-products__container">
                         {%- if block.settings.make_collapsible_row -%}
                           <details id="Details-{{ block.id }}-{{ section.id }}" open>
-                            <summary>
+                      <summary>
                         {%- endif %}
                         <div class="summary__title">
                           {%- if block.settings.make_collapsible_row -%}
@@ -730,7 +964,7 @@
                         </div>
                         {%- if block.settings.make_collapsible_row -%}
                           {{- 'icon-caret.svg' | inline_asset_content -}}
-                          </summary>
+                      </summary>
                         {%- endif -%}
                         <slideshow-component class="slider-mobile-gutter">
                           {%- assign number_of_slides = recommendations.products_count
@@ -914,17 +1148,113 @@
     </script>
   </div>
 </product-info>
-<div class="sticky-add-to-cart">
-  <form action="/cart/add" method="post">
-    <select name="id">
-      {% for variant in product.variants %}
-        <option value="{{ variant.id }}">{{ variant.title }}</option>
-      {% endfor %}
-    </select>
-    <input type="number" name="quantity" value="1" min="1">
-    <button type="submit">Add to Cart</button>
+<div class="sticky-add-to-cart hidden ">
+  <form action="/cart/add" method="post" class="sticky-form">
+    <div class="sticky-content"> <!-- Wrapper for content to hide on mobile -->
+      <img src="{{ product.featured_image | img_url: '60x60' }}" alt="{{ product.title | escape }}" class="sticky-product-image">
+      <h1 class="sticky-title">{{ product.title | escape }}</h1>
+    </div>
+    <div class="sticky-actions"> <!-- Group quantity and button together -->
+      <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
+        <button class="quantity__button" name="minus" type="button">
+          <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+          <span class="svg-wrapper">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
+        </button>
+        <input
+          class="quantity__input"
+          type="number"
+          name="quantity"
+          id="Quantity-{{ section.id }}"
+          data-cart-quantity="{{ cart_qty }}"
+          data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+          min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+          {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+            data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+            max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+          {% endif %}
+          step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+          value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+          form="{{ product_form_id }}"
+        >
+        <button class="quantity__button" name="plus" type="button">
+          <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+          <span class="svg-wrapper">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+        </button>
+      </quantity-input>
+      {%- liquid
+        assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
+        assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
+        if cart_qty > 0
+          assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
+        endif
+      -%}
+      {%- if product.quantity_price_breaks_configured? -%}
+        <price-per-item
+          id="Price-Per-Item-{{ section.id }}"
+          data-section-id="{{ section.id }}"
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+        >
+          {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
+            {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+            <div class="price-per-item">
+              {%- if variant_price_compare -%}
+                <dl class="price-per-item--current">
+                  <dt class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</dt>
+                  <dd>
+                    <s class="variant-item__old-price">{{ variant_price_compare | money_with_currency }}</s>
+                  </dd>
+                </dl>
+              {%- endif -%}
+              {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
+                {%- assign variant_price = product.selected_or_first_available_variant.price | money_with_currency -%}
+                <span class="price-per-item--current">
+                  {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                </span>
+              {%- else -%}
+                {%- for price_break in volume_pricing_array -%}
+                  {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
+                    {%- assign price_break_price = price_break.price | money_with_currency -%}
+                    <span class="price-per-item--current">
+                      {{- 'products.product.volume_pricing.price_at_each' | t: price: price_break_price -}}
+                    </span>
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            {%- assign variant_price = product.selected_or_first_available_variant.price | money_with_currency -%}
+            {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+            <div class="price-per-item">
+              {%- if variant_price_compare -%}
+                <dl class="price-per-item--current">
+                  <dt class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</dt>
+                  <dd>
+                    <s class="variant-item__old-price">{{ variant_price_compare | money_with_currency }}</s>
+                  </dd>
+                  <dt class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</dt>
+                  <dd>
+                    <span class="price-per-item--current">
+                      {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                    </span>
+                  </dd>
+                </dl>
+              {%- else -%}
+                <span class="price-per-item--current">
+                  {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </price-per-item>
+      {%- endif -%}
+      <button class="btn" type="submit">Add to Cart</button>
+    </div>
   </form>
 </div>
+
+</div>
+
 
 {% schema %}
 {
@@ -2514,23 +2844,40 @@
 {% endschema %}
 
 <script>
-    window.addEventListener('scroll', function() {
-    const originalButton = document.querySelector('.original-add-to-cart');
-    const stickyButton = document.querySelector('.sticky-add-to-cart');
-    const originalPosition = originalButton.getBoundingClientRect();
+  // Function to check and toggle sticky button visibility
+function updateStickyVisibility() {
+  const originalButton = document.querySelector('.original-add-to-cart'); // Adjust selector if needed
+  const stickyButton = document.querySelector('.sticky-add-to-cart');
+  
+  if (!originalButton || !stickyButton) return;
+  
+  const originalPosition = originalButton.getBoundingClientRect();
+  
+  if (originalPosition.bottom < 0) {
+    stickyButton.classList.remove('hidden');
+  } else {
+    stickyButton.classList.add('hidden');
+  }
+}
 
-    if (originalPosition.bottom < 0) { /* Original button is off-screen */
-      stickyButton.style.display = 'flex';
-    } else {
-      stickyButton.style.display = 'none';
-    }
-  });
-  document.addEventListener('DOMContentLoaded', function () {
+// Run on scroll
+window.addEventListener('scroll', updateStickyVisibility);
+
+// Run on page load and handle other initialization
+document.addEventListener('DOMContentLoaded', function () {
+  // Initial visibility check for sticky button
+  updateStickyVisibility();
+
+  // Countdown timer logic
   const countdownElements = document.querySelectorAll('.sale-countdown');
   
   countdownElements.forEach(function (element) {
-    const endDate = new Date(element.getAttribute('data-end-date')).getTime();
+    const endDateAttr = element.getAttribute('data-end-date');
+    if (!endDateAttr) return;
+    
+    const endDate = new Date(endDateAttr).getTime();
     const timerElement = element.querySelector('.countdown-timer');
+    if (!timerElement) return;
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -2549,15 +2896,16 @@
       timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    updateCountdown(); // Initial call
-    setInterval(updateCountdown, 1000); // Update every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   });
-});
 
-      document.addEventListener('DOMContentLoaded', () => {
+  // Star rating logic
   document.querySelectorAll('.star-rating').forEach(stars => {
     const rating = parseFloat(stars.getAttribute('data-rating'));
-    stars.style.setProperty('--rating', rating); // Update CSS variable
+    if (!isNaN(rating)) {
+      stars.style.setProperty('--rating', rating);
+    }
   });
 });
 </script>
