@@ -359,11 +359,11 @@ bottom: 10px;
   }
 
   .btn {
-    width: 100%; /* Full width on mobile */
-    margin: 0; /* Remove auto margin for full width */
-    padding: 12px 0; /* Adjust padding for full width, keep vertical padding */
-    height: 40px; /* Maintain height equal to quantity */
-    border-radius: 0; /* Optional: remove rounding for full-width look */
+    width: 100%; 
+    margin: 0; 
+    padding: 12px 0; 
+    height: 40px; 
+    border-radius: 0; 
   }
 }
   {%- endstyle -%}
@@ -1148,13 +1148,13 @@ bottom: 10px;
     </script>
   </div>
 </product-info>
-<div class="sticky-add-to-cart hidden ">
+<div class="sticky-add-to-cart hidden">
   <form action="/cart/add" method="post" class="sticky-form">
-    <div class="sticky-content"> <!-- Wrapper for content to hide on mobile -->
+    <div class="sticky-content"> 
       <img src="{{ product.featured_image | img_url: '60x60' }}" alt="{{ product.title | escape }}" class="sticky-product-image">
       <h1 class="sticky-title">{{ product.title | escape }}</h1>
     </div>
-    <div class="sticky-actions"> <!-- Group quantity and button together -->
+    <div class="sticky-actions"> 
       <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
         <button class="quantity__button" name="minus" type="button">
           <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
@@ -1174,81 +1174,13 @@ bottom: 10px;
           {% endif %}
           step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
           value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-          form="{{ product_form_id }}"
         >
         <button class="quantity__button" name="plus" type="button">
           <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
           <span class="svg-wrapper">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
         </button>
       </quantity-input>
-      {%- liquid
-        assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
-        assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
-        if cart_qty > 0
-          assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
-        endif
-      -%}
-      {%- if product.quantity_price_breaks_configured? -%}
-        <price-per-item
-          id="Price-Per-Item-{{ section.id }}"
-          data-section-id="{{ section.id }}"
-          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-        >
-          {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
-            {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
-            <div class="price-per-item">
-              {%- if variant_price_compare -%}
-                <dl class="price-per-item--current">
-                  <dt class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</dt>
-                  <dd>
-                    <s class="variant-item__old-price">{{ variant_price_compare | money_with_currency }}</s>
-                  </dd>
-                </dl>
-              {%- endif -%}
-              {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
-                {%- assign variant_price = product.selected_or_first_available_variant.price | money_with_currency -%}
-                <span class="price-per-item--current">
-                  {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
-                </span>
-              {%- else -%}
-                {%- for price_break in volume_pricing_array -%}
-                  {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
-                    {%- assign price_break_price = price_break.price | money_with_currency -%}
-                    <span class="price-per-item--current">
-                      {{- 'products.product.volume_pricing.price_at_each' | t: price: price_break_price -}}
-                    </span>
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-            </div>
-          {%- else -%}
-            {%- assign variant_price = product.selected_or_first_available_variant.price | money_with_currency -%}
-            {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
-            <div class="price-per-item">
-              {%- if variant_price_compare -%}
-                <dl class="price-per-item--current">
-                  <dt class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</dt>
-                  <dd>
-                    <s class="variant-item__old-price">{{ variant_price_compare | money_with_currency }}</s>
-                  </dd>
-                  <dt class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</dt>
-                  <dd>
-                    <span class="price-per-item--current">
-                      {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
-                    </span>
-                  </dd>
-                </dl>
-              {%- else -%}
-                <span class="price-per-item--current">
-                  {{- 'products.product.volume_pricing.price_at_each' | t: price: variant_price -}}
-                </span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        </price-per-item>
-      {%- endif -%}
-      <button class="btn" type="submit">Add to Cart</button>
+      <button class="btn add-to-cart-btn" type="submit">Add to Cart</button>
     </div>
   </form>
 </div>
@@ -2845,67 +2777,99 @@ bottom: 10px;
 
 <script>
   // Function to check and toggle sticky button visibility
-function updateStickyVisibility() {
-  const originalButton = document.querySelector('.original-add-to-cart'); // Adjust selector if needed
-  const stickyButton = document.querySelector('.sticky-add-to-cart');
-  
-  if (!originalButton || !stickyButton) return;
-  
-  const originalPosition = originalButton.getBoundingClientRect();
-  
-  if (originalPosition.bottom < 0) {
-    stickyButton.classList.remove('hidden');
-  } else {
-    stickyButton.classList.add('hidden');
-  }
-}
-
-// Run on scroll
-window.addEventListener('scroll', updateStickyVisibility);
-
-// Run on page load and handle other initialization
-document.addEventListener('DOMContentLoaded', function () {
-  // Initial visibility check for sticky button
-  updateStickyVisibility();
-
-  // Countdown timer logic
-  const countdownElements = document.querySelectorAll('.sale-countdown');
-  
-  countdownElements.forEach(function (element) {
-    const endDateAttr = element.getAttribute('data-end-date');
-    if (!endDateAttr) return;
+  function updateStickyVisibility() {
+    const originalButton = document.querySelector('.original-add-to-cart'); // Adjust selector if needed
+    const stickyButton = document.querySelector('.sticky-add-to-cart');
     
-    const endDate = new Date(endDateAttr).getTime();
-    const timerElement = element.querySelector('.countdown-timer');
-    if (!timerElement) return;
+    if (!originalButton || !stickyButton) return;
+    
+    const originalPosition = originalButton.getBoundingClientRect();
+    
+    if (originalPosition.bottom < 0) {
+      stickyButton.classList.remove('hidden');
+    } else {
+      stickyButton.classList.add('hidden');
+    }
+  }
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const timeLeft = endDate - now;
+  // Run on scroll
+  window.addEventListener('scroll', updateStickyVisibility);
 
-      if (timeLeft <= 0) {
-        timerElement.textContent = 'Sale Ended';
-        return;
+  // Run on page load and handle other initialization
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initial visibility check for sticky button
+    updateStickyVisibility();
+
+    // Countdown timer logic
+    const countdownElements = document.querySelectorAll('.sale-countdown');
+    
+    countdownElements.forEach(function (element) {
+      const endDateAttr = element.getAttribute('data-end-date');
+      if (!endDateAttr) return;
+      
+      const endDate = new Date(endDateAttr).getTime();
+      const timerElement = element.querySelector('.countdown-timer');
+      if (!timerElement) return;
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const timeLeft = endDate - now;
+
+        if (timeLeft <= 0) {
+          timerElement.textContent = 'Sale Ended';
+          return;
+        }
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
 
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
 
-      timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    // Star rating logic
+    document.querySelectorAll('.star-rating').forEach(stars => {
+      const rating = parseFloat(stars.getAttribute('data-rating'));
+      if (!isNaN(rating)) {
+        stars.style.setProperty('--rating', rating);
+      }
+    });
+
+    // AJAX Add to Cart functionality for Sticky Button
+    const addToCartForm = document.querySelector(".sticky-add-to-cart form");
+
+    if (addToCartForm) {
+      addToCartForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default page reload
+
+        const formData = new FormData(addToCartForm);
+        formData.append("id", "{{ product.selected_or_first_available_variant.id }}");
+
+        fetch("/cart/add.js", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.id) {
+            console.log("Product added:", data);
+            // Redirect to cart page after adding product
+            window.location.href = "/cart";
+          } else {
+            alert("⚠️ Failed to add product. Please try again.");
+          }
+        })
+        .catch(error => {
+          console.error("Error adding to cart:", error);
+          alert("❌ Something went wrong. Please try again.");
+        });
+      });
     }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
   });
-
-  // Star rating logic
-  document.querySelectorAll('.star-rating').forEach(stars => {
-    const rating = parseFloat(stars.getAttribute('data-rating'));
-    if (!isNaN(rating)) {
-      stars.style.setProperty('--rating', rating);
-    }
-  });
-});
 </script>
+
