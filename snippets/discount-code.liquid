@@ -1,0 +1,56 @@
+<style>
+  .input-box {
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+  }
+  .input-box input {
+    padding: 10px;
+    flex-grow: 1;
+  }
+  .input-box input:focus {
+    border: none;
+  }
+  .input-box span {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
+  }
+  .colored-icon {
+    filter: brightness(0) invert(1);
+  }
+</style>
+
+<div>
+  <p>Discount code</p>
+  <div class="input-box">
+    <input
+      type="text"
+      id="discount-code"
+      name="discount"
+      placeholder="Enter discount code here">
+    <span>
+      <img
+        src="{{"icon-check-mark.svg" | asset_url}} "
+        alt=""
+        width="40"
+        class="colored-icon"
+        onclick="applyDiscount()">
+    </span>
+  </div>
+</div>
+
+<script>
+    function applyDiscount(){
+        const input = document.getElementById("discount-code")
+        const discountCode = input.value.trim()
+        if(discountCode){
+            input.value = ''
+            window.location.href = `/checkout?discount=${encodeURIComponent(discountCode)}`
+        }
+        else{
+            alert("enter the discount code")
+        }
+    }
+</script>

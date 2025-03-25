@@ -1,0 +1,76 @@
+{% style %}
+    .cart-notification {
+      display: none;
+    }
+    .free-shipping-progress {
+      margin: 10px 0;
+      text-align: center;
+    }
+    .free-shipping-bar {
+      width: 100%;
+      height: 15px;
+      background-color: #f3f3f3;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .free-shipping-bar::-webkit-progress-value {
+      background-color: #4CAF50;
+    }
+    .free-shipping-bar::-moz-progress-bar {
+      background-color: #4CAF50;
+    }
+  {% endstyle %}
+ 
+ 
+ {% comment %} Free shipping progress bar start {% endcomment %}
+ <div class="free-shipping-progress" data-free-shipping-threshold="100000">
+
+ <p class="free-shipping-message">
+   {% if cart.total_price < 100000 %}
+     Spend ₹{{ 100000 | minus: cart.total_price | money_without_currency }} more for free shipping!
+   {% else %}
+     Congrats! You've earned free shipping!
+   {% endif %}
+ </p>
+ <progress
+   class="free-shipping-bar"
+   value="{% if cart.total_price < 100000 %}{{ cart.total_price | times: 100 | divided_by: 100000 }}{% else %}100{% endif %}"
+   max="100"></progress>
+</div>
+{% comment %} Free shipping progress bar end {% endcomment %}
+<script>
+    function updateFreeShippingProgress() {
+      const threshold = 100000; // ₹1000 in cents
+      const messageElement = document.querySelector('.free-shipping-message');
+      const progressBar = document.querySelector('.free-shipping-bar');
+
+      if (!messageElement || !progressBar) return; // Exit if elements aren’t found
+
+      fetch('/cart.js')
+        .then(response => response.json())
+        .then(cart => {
+          const cartTotal = cart.total_price;
+          if (cartTotal < threshold) {
+            const amountLeft = (threshold - cartTotal) / 100; // Convert to rupees
+            messageElement.textContent = `Spend ₹${amountLeft} more for free shipping!`;
+            const progressPercentage = (cartTotal / threshold) * 100;
+            progressBar.value = progressPercentage;
+          } else {
+            messageElement.textContent = "Congrats! You’ve earned free shipping!";
+            progressBar.value = 100;
+          }
+        })
+        .catch(error => console.error('Error fetching cart:', error));
+    }
+
+    // Run when notification opens or cart updates
+    document.addEventListener('DOMContentLoaded', () => {
+      const notification = document.querySelector('cart-notification');
+      if (notification) {
+        notification.addEventListener('cart:render', updateFreeShippingProgress);
+      }
+    });
+
+    // Listen for broader cart updates
+    document.addEventListener('cart:updated', updateFreeShippingProgress);
+  </script>

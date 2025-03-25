@@ -184,7 +184,15 @@
 }
 {% endschema %}
 
+{% comment %} function applyDiscount() {
+  const discountCode = document.getElementById('discount-code').value.trim();
+  if (discountCode) {
+    window.location.href = `/checkout?discount=${discountCode}`;
+  }
+} {% endcomment %}
+
 <div class="page-width mt section-{{ section.id }}-padding">
+    {% comment %} {% render "discount-code" %} {% endcomment %}
     <ul class="tabs">
         {% for block in section.blocks %}
             <li>
